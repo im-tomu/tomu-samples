@@ -1,0 +1,13 @@
+language: c
+sudo: required
+dist: trusty
+
+install:
+        - sudo apt-add-repository -y ppa:team-gcc-arm-embedded/ppa
+        - sudo apt-get update
+        - sudo apt-get install -yy gcc-arm-embedded
+
+script:
+        - cd efm32hg-blinky
+        - make deps
+        - CROSS_COMPILE=arm-none-eabi- make
