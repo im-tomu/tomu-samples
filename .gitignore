@@ -31,3 +31,14 @@
 # Debug files
 *.dSYM/
 *.su
+
+# Tarballs/compressed files
+*.zip
+*.tar
+*.tar.gz
+*.tar.bz2
+
+# External libraries
+Gecko_SDK
+gcc-arm-none-eabi-5_4-2016q2
+
