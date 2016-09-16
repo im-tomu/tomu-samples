@@ -17,14 +17,13 @@
 #
 # PATHS
 #
-ARM_BASE = gcc-arm-none-eabi-5_4-2016q2
+CROSS_COMPILE ?= gcc-arm-none-eabi-5_4-2016q2/bin/arm-none-eabi-
 # You can download the ARM toolchain from:
 #   https://launchpad.net/gcc-arm-embedded/+download
 
-CC=$(ARM_BASE)/bin/arm-none-eabi-gcc
-OBJCOPY=$(ARM_BASE)/bin/arm-none-eabi-objcopy
-OBJDUMP=$(ARM_BASE)/bin/arm-none-eabi-objdump
-
+CC	= $(CROSS_COMPILE)gcc
+OBJCOPY	= $(CROSS_COMPILE)objcopy
+OBJDUMP	= $(CROSS_COMPILE)objdump
 
 ################################################################################
 #
