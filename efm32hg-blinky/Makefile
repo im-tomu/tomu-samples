@@ -117,7 +117,7 @@ clean:
 	@rm -f *.o
 
 deps:
-	@[ ! -d Gecko_SDK ] && git clone https://github.com/SiliconLabs/Gecko_SDK
+	@[ ! -d Gecko_SDK ] && git clone --depth 1 https://github.com/SiliconLabs/Gecko_SDK
 
 ################################################################################
 #
