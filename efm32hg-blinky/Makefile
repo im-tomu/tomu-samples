@@ -148,9 +148,11 @@ GECKO_OBJ = $(patsubst %.S,%.o,$(GECKO_A_SRC)) \
 #
 # REAL TARGETS // CLEAN
 #
+blinky.dump: blinky.elf
+	$(Q_OBJDUMP)$(OBJDUMP) -Sx $^ > $@
+
 blinky.elf: main.o $(GECKO_OBJ)
 	$(Q_CC)$(CC) -Xlinker -Map=blinky.map $(LFLAGS) -o $@ $^
-	$(Q_OBJDUMP)$(OBJDUMP) -Sx $@ > blinky.dump
 
 blinky.bin: blinky.elf
 	$(Q_OBJCOPY)$(OBJCOPY) -O binary $< $@
