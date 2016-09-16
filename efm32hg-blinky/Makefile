@@ -13,18 +13,24 @@
 # limitations under the License.
 
 
+# Usee make V=1 for a verbose build.
+ifndef V
+        Q_CC		= @echo '      CC ' $@;
+        Q_OBJDUMP	= @echo ' OBJDUMP ' $@;
+        Q_OBJCOPY	= @echo ' OBJCOPY ' $@;
+endif
+
 ################################################################################
 #
 # PATHS
 #
-ARM_BASE = gcc-arm-none-eabi-5_4-2016q2
+CROSS_COMPILE ?= gcc-arm-none-eabi-5_4-2016q2/bin/arm-none-eabi-
 # You can download the ARM toolchain from:
 #   https://launchpad.net/gcc-arm-embedded/+download
 
-CC=$(ARM_BASE)/bin/arm-none-eabi-gcc
-OBJCOPY=$(ARM_BASE)/bin/arm-none-eabi-objcopy
-OBJDUMP=$(ARM_BASE)/bin/arm-none-eabi-objdump
-
+CC	= $(CROSS_COMPILE)gcc
+OBJCOPY	= $(CROSS_COMPILE)objcopy
+OBJDUMP	= $(CROSS_COMPILE)objdump
 
 ################################################################################
 #
@@ -118,7 +124,7 @@ clean:
 	@rm -f *.o
 
 deps:
-	@[ ! -d Gecko_SDK ] && git clone https://github.com/SiliconLabs/Gecko_SDK
+	@[ ! -d Gecko_SDK ] && git clone --depth 1 https://github.com/SiliconLabs/Gecko_SDK
 
 ################################################################################
 #
@@ -132,24 +138,22 @@ GECKO_OBJ = $(patsubst %.S,%.o,$(GECKO_A_SRC)) \
 						$(patsubst %.c,%.o,$(GECKO_C_SRC))
 
 %.o: %.c
-	@echo "    [CC] $^"
-	@$(CC) -c $(CFLAGS) -c -o $@ $<
+	$(Q_CC)$(CC) -c $(CFLAGS) -c -o $@ $<
 
 %.o: %.S
-	@echo "    [AS] $^"
-	@$(CC) -c $(CFLAGS) -c -o $@ $<
+	$(Q_CC)$(CC) -c $(CFLAGS) -c -o $@ $<
 
 
 ################################################################################
 #
 # REAL TARGETS // CLEAN
 #
+blinky.dump: blinky.elf
+	$(Q_OBJDUMP)$(OBJDUMP) -Sx $^ > $@
+
 blinky.elf: main.o $(GECKO_OBJ)
-	@echo "    [LD] (...) -> $@"
-	@$(CC) -Xlinker -Map=blinky.map $(LFLAGS) -o $@ $^
-	@$(OBJDUMP) -Sx $@ > blinky.dump
+	$(Q_CC)$(CC) -Xlinker -Map=blinky.map $(LFLAGS) -o $@ $^
 
 blinky.bin: blinky.elf
-	@echo "    [OC] $< -> $@"
-	@$(OBJCOPY) -O binary $< $@
+	$(Q_OBJCOPY)$(OBJCOPY) -O binary $< $@
 
