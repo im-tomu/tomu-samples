@@ -13,6 +13,13 @@
 # limitations under the License.
 
 
+# Usee make V=1 for a verbose build.
+ifndef V
+        Q_CC		= @echo '      CC ' $@;
+        Q_OBJDUMP	= @echo ' OBJDUMP ' $@;
+        Q_OBJCOPY	= @echo ' OBJCOPY ' $@;
+endif
+
 ################################################################################
 #
 # PATHS
@@ -131,12 +138,10 @@ GECKO_OBJ = $(patsubst %.S,%.o,$(GECKO_A_SRC)) \
 						$(patsubst %.c,%.o,$(GECKO_C_SRC))
 
 %.o: %.c
-	@echo "    [CC] $^"
-	@$(CC) -c $(CFLAGS) -c -o $@ $<
+	$(Q_CC)$(CC) -c $(CFLAGS) -c -o $@ $<
 
 %.o: %.S
-	@echo "    [AS] $^"
-	@$(CC) -c $(CFLAGS) -c -o $@ $<
+	$(Q_CC)$(CC) -c $(CFLAGS) -c -o $@ $<
 
 
 ################################################################################
@@ -144,11 +149,9 @@ GECKO_OBJ = $(patsubst %.S,%.o,$(GECKO_A_SRC)) \
 # REAL TARGETS // CLEAN
 #
 blinky.elf: main.o $(GECKO_OBJ)
-	@echo "    [LD] (...) -> $@"
-	@$(CC) -Xlinker -Map=blinky.map $(LFLAGS) -o $@ $^
-	@$(OBJDUMP) -Sx $@ > blinky.dump
+	$(Q_CC)$(CC) -Xlinker -Map=blinky.map $(LFLAGS) -o $@ $^
+	$(Q_OBJDUMP)$(OBJDUMP) -Sx $@ > blinky.dump
 
 blinky.bin: blinky.elf
-	@echo "    [OC] $< -> $@"
-	@$(OBJCOPY) -O binary $< $@
+	$(Q_OBJCOPY)$(OBJCOPY) -O binary $< $@
 
