@@ -12,10 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
 
 #include "capsense.h"
+#include "retargetserial.h"
+
 #include "em_chip.h"
 #include "em_cmu.h"
 #include "em_device.h"
@@ -46,15 +49,22 @@ int main() {
   // errata (implements workarounds, etc).
   CHIP_Init();
 
+  // Initialise the LEUART, and map output from printf() to it.
+  RETARGET_SerialInit();
+  RETARGET_SerialCrLf(1);
+
   // Switch on the clock for GPIO. Even though there's no immediately obvious
   // timing stuff going on beyond the SysTick below, it still needs to be
   // enabled for the GPIO to work.
+  printf("Enabling GPIO clock\n");
   CMU_ClockEnable(cmuClock_GPIO, true);
 
   // Sets up and enable the `SysTick_Handler' interrupt to fire once every 1ms.
   // ref: http://community.silabs.com/t5/Official-Blog-of-Silicon-Labs/Chapter-5-MCU-Clocking-Part-2-The-SysTick-Interrupt/ba-p/145297
+  printf("Starting systick timer\n");
   if (SysTick_Config(CMU_ClockFreqGet(cmuClock_CORE) / 1000)) {
     // Something went wrong.
+    printf("ERROR WHILST INITIALISING SYSTICK TIMER! HALTING.\n");
     while (1);
   }
 
@@ -62,15 +72,20 @@ int main() {
   // drain:
   //  - PA0 == green
   //  - PB7 == red
+  printf("Setting up GPIO pins to be open-drain\n");
   GPIO_PinModeSet(gpioPortA, 0, gpioModeWiredAnd, 0);
   GPIO_PinModeSet(gpioPortB, 7, gpioModeWiredAnd, 0);
 
   // Enable the capacitive touch sensor. Remember, this consumes TIMER0 and
   // TIMER1, so those are off-limits to us.
+  printf("Initialising the capacitive touch sensor\n");
   CAPSENSE_Init();
 
-  // Blink infinitely, in an aviation-like pattern.
+  // Blink infinitely.
+  printf("Beginning application loop.\n");
   while (1) {
+    printf("Hello world\n");
+
     // Clear the PA0 bit, allowing the FET to sink to ground and thus lighting
     // up the green LED.
     GPIO_PinOutClear(gpioPortA, 0);
@@ -102,6 +117,7 @@ int main() {
     // touched, rapid blink the green LED ten times.
     if (CAPSENSE_getPressed(BUTTON0_CHANNEL) &&
         !CAPSENSE_getPressed(BUTTON1_CHANNEL)) {
+      printf("Detected touch near green LED\n");
       int i;
       for (i = 10; i > 0; i--) {
         GPIO_PinOutClear(gpioPortA, 0);
@@ -113,6 +129,7 @@ int main() {
     // touched, rapid blink the red LED ten times.
     } else if (CAPSENSE_getPressed(BUTTON1_CHANNEL) &&
                !CAPSENSE_getPressed(BUTTON0_CHANNEL)) {
+      printf("Detected touch near red LED\n");
       int i;
       for (i = 10; i > 0; i--) {
         GPIO_PinOutClear(gpioPortB, 7);

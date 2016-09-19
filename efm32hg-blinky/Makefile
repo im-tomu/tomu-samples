@@ -67,7 +67,6 @@ LFLAGS = -mcpu=cortex-m0plus \
 				 -Wl,--start-group \
 				 -lgcc \
 				 -lc_nano \
-				 -lnosys \
 				 -Wl,--end-group
 
 
@@ -133,7 +132,9 @@ deps:
 GECKO_A_SRC = Gecko_SDK/Device/SiliconLabs/EFM32HG/Source/GCC/startup_efm32hg.S
 GECKO_C_SRC = $(shell find Gecko_SDK/emlib/src -name \*.c) \
 							Gecko_SDK/Device/SiliconLabs/EFM32HG/Source/system_efm32hg.c \
-							Gecko_SDK/kits/common/drivers/capsense.c
+							Gecko_SDK/kits/common/drivers/capsense.c \
+							Gecko_SDK/kits/common/drivers/retargetio.c \
+							Gecko_SDK/kits/common/drivers/retargetserial.c
 GECKO_OBJ = $(patsubst %.S,%.o,$(GECKO_A_SRC)) \
 						$(patsubst %.c,%.o,$(GECKO_C_SRC))
 

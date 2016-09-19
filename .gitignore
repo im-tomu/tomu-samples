@@ -21,6 +21,7 @@
 *.dylib
 
 # Executables
+*.bin
 *.exe
 *.out
 *.app
@@ -31,6 +32,9 @@
 # Debug files
 *.dSYM/
 *.su
+*.d
+*.dump
+*.map
 
 # Tarballs/compressed files
 *.zip
