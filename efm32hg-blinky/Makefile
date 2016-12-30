@@ -57,7 +57,7 @@ CFLAGS = $(IFLAGS) \
 				 -O0 \
 				 -g
 
-LSCRIPT = Gecko_SDK/Device/SiliconLabs/EFM32HG/Source/GCC/efm32hg.ld
+LSCRIPT = tomu.ld
 
 LFLAGS = -mcpu=cortex-m0plus \
 				 -mthumb \
@@ -125,7 +125,8 @@ clean:
 
 deps:
 	@[ ! -d Gecko_SDK ] && git clone --depth 1 https://github.com/SiliconLabs/Gecko_SDK
-
+	@echo "Patching linker file to ${LSCRIPT}"
+	@patch -o tomu.ld Gecko_SDK/Device/SiliconLabs/EFM32HG/Source/GCC/efm32hg.ld linker.patch
 ################################################################################
 #
 # REAL TARGETS // COMMON
