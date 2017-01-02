@@ -1,6 +1,13 @@
-14,15c14,15
-<   FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 65536
-<   RAM (rwx)  : ORIGIN = 0x20000000, LENGTH = 8192
----
->   FLASH (rx) : ORIGIN = 0x00004000, LENGTH = 0xC000
->   RAM (rwx)  : ORIGIN = 0x20000000, LENGTH = 0x2000
+--- Gecko_SDK/Device/SiliconLabs/EFM32HG/Source/GCC/efm32hg.ld	2017-01-02 16:25:06.000000000 +0100
++++ tomu.ld	2017-01-02 16:30:02.000000000 +0100
+@@ -11,8 +11,8 @@
+ 
+ MEMORY
+ {
+-  FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 65536
+-  RAM (rwx)  : ORIGIN = 0x20000000, LENGTH = 8192
++  FLASH (rx) : ORIGIN = 0x00004000, LENGTH = 0xC000
++  RAM (rwx)  : ORIGIN = 0x20000000, LENGTH = 0x2000
+ }
+ 
+ /* Linker script to place sections and symbol values. Should be used together
