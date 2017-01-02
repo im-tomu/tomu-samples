@@ -24,7 +24,7 @@ endif
 #
 # PATHS
 #
-CROSS_COMPILE ?= gcc-arm-none-eabi-5_4-2016q2/bin/arm-none-eabi-
+CROSS_COMPILE ?= gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-
 # You can download the ARM toolchain from:
 #   https://launchpad.net/gcc-arm-embedded/+download
 

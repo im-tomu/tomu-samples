@@ -8,6 +8,18 @@ ease your introduction to the Tomu platform.
 
 ## How to use:
 
+### Docker
+
+There is a Dockerfile for your convenience which will build an image with the complete toolchain available.
+
+Compile the image once using `docker build -t tomu .` in the root directory of this project.
+
+After that you can reuse the image for every command like the following example
+
+`docker run --rm -t -i -v $(pwd)/efm32hg-blinky:/code tomu make`
+
+### Manual
+
 To compile these, you'll need a cross-compiling toolchain to arm-none-eabi.
 
  - Debian/Ubuntu/... : `sudo apt-get install gcc-arm-none-eabi`
