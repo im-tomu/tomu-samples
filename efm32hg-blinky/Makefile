@@ -24,9 +24,9 @@ endif
 #
 # PATHS
 #
+# Put the path to the arm-none-eabi toolchain that you downloaded here, up to
+# /bin/, and end with arm-none-eabi-
 CROSS_COMPILE ?= gcc-arm-none-eabi-5_4-2016q2/bin/arm-none-eabi-
-# You can download the ARM toolchain from:
-#   https://launchpad.net/gcc-arm-embedded/+download
 
 CC	= $(CROSS_COMPILE)gcc
 OBJCOPY	= $(CROSS_COMPILE)objcopy
