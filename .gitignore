@@ -27,6 +27,7 @@
 *.i*86
 *.x86_64
 *.hex
+*.bin
 
 # Debug files
 *.dSYM/
@@ -37,6 +38,11 @@
 *.tar
 *.tar.gz
 *.tar.bz2
+
+# Extra files
+*.dump
+*.map
+*.d
 
 # External libraries
 Gecko_SDK
