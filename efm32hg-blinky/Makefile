@@ -39,10 +39,10 @@ OBJDUMP	= $(CROSS_COMPILE)objdump
 # ARGUMENTS TO COMPILERS/LINKERS
 #
 IFLAGS = -I. \
-				 -IGecko_SDK/cmsis/Include \
-				 -IGecko_SDK/Device/SiliconLabs/EFM32HG/Include \
-				 -IGecko_SDK/emlib/inc \
-				 -IGecko_SDK/kits/common/drivers
+				 -IGecko_SDK/platform/CMSIS/Include \
+				 -IGecko_SDK/platform/Device/SiliconLabs/EFM32HG/Include \
+				 -IGecko_SDK/platform/emlib/inc \
+				 -IGecko_SDK/hardware/kit/common/drivers
 
 CFLAGS = $(IFLAGS) \
 				 -DEFM32HG309F64 \
@@ -133,10 +133,10 @@ deps:
 #
 # REAL TARGETS // COMMON
 #
-GECKO_A_SRC = Gecko_SDK/Device/SiliconLabs/EFM32HG/Source/GCC/startup_efm32hg.S
-GECKO_C_SRC = $(shell [ -d Gecko_SDK ] && find Gecko_SDK/emlib/src -name \*.c) \
-							Gecko_SDK/Device/SiliconLabs/EFM32HG/Source/system_efm32hg.c \
-							Gecko_SDK/kits/common/drivers/capsense.c
+GECKO_A_SRC = Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Source/GCC/startup_efm32hg.S
+GECKO_C_SRC = $(shell [ -d Gecko_SDK ] && find Gecko_SDK/platform/emlib/src -name \*.c) \
+							Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Source/system_efm32hg.c \
+							Gecko_SDK/hardware/kit/common/drivers/capsense.c
 GECKO_OBJ = $(patsubst %.S,%.o,$(GECKO_A_SRC)) \
 						$(patsubst %.c,%.o,$(GECKO_C_SRC))
 
