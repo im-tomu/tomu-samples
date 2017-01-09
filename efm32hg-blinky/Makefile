@@ -125,14 +125,26 @@ clean:
 	@find Gecko_SDK -type f -name \*.o -delete
 	@rm -f *.o
 
+dist-clean:
+	make clean || true
+	rm -rf Gecko_SDK
+	rm tomu.ld
+
 deps:
-	@[ ! -d Gecko_SDK ] && git clone --depth 1 https://github.com/SiliconLabs/Gecko_SDK
-	@echo "Patching linker file to ${LSCRIPT}"
-	@patch -o tomu.ld Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Source/GCC/efm32hg.ld linker.patch
+	@if [ ! -d Gecko_SDK ]; then \
+		git clone --depth 1 https://github.com/SiliconLabs/Gecko_SDK --branch ${GECKO_SDK_REV}; \
+	fi
+	@if [ ! -f "${LSCRIPT}" ]; then \
+		echo "Patching linker file to ${LSCRIPT}"; \
+		patch -o ${LSCRIPT} Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Source/GCC/efm32hg.ld linker.patch; \
+	fi
+
+
 ################################################################################
 #
 # REAL TARGETS // COMMON
 #
+GECKO_SDK_REV = v5.0.0
 GECKO_A_SRC = Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Source/GCC/startup_efm32hg.S
 GECKO_C_SRC = $(shell [ -d Gecko_SDK ] && find Gecko_SDK/platform/emlib/src -name \*.c) \
 							Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Source/system_efm32hg.c \
