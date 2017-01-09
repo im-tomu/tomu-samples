@@ -42,3 +42,5 @@
 Gecko_SDK
 gcc-arm-none-eabi-5_4-2016q2
 
+# Patched linker file
+tomu.ld
