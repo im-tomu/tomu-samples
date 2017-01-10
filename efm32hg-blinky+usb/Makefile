@@ -43,6 +43,7 @@ IFLAGS = -I. \
 				 -I../Gecko_SDK/platform/CMSIS/Include \
 				 -I../Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Include \
 				 -I../Gecko_SDK/platform/emlib/inc \
+				 -I../Gecko_SDK/platform/middleware/usb_gecko/inc \
 				 -I../Gecko_SDK/hardware/kit/common/drivers
 
 CFLAGS = $(IFLAGS) \
@@ -64,8 +65,8 @@ LSCRIPT = ../tomu.ld
 
 LFLAGS = -mcpu=cortex-m0plus \
 				 -mthumb \
-				 -T$(LSCRIPT) \
 				 --specs=nosys.specs \
+				 -T$(LSCRIPT) \
 				 -Wl,--gc-sections \
 				 -Wl,--start-group \
 				 -lnosys \
@@ -76,11 +77,11 @@ LFLAGS = -mcpu=cortex-m0plus \
 #
 # PHONY TARGETS
 #
-.PHONY: all blinky check clean
+.PHONY: all blinky+usb check clean
 
-all: blinky
+all: blinky+usb
 
-blinky: blinky.bin blinky.dump blinky.elf
+blinky+usb: blinky+usb.bin blinky+usb.dump blinky+usb.elf
 
 check:
 	@echo "Checking Gecko SDK linker script $(LSCRIPT) to ensure FLASH ORIGIN is set to 0x00004000..."
@@ -124,11 +125,14 @@ clean:
 # REAL TARGETS // COMMON
 #
 GECKO_A_SRC = ../Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Source/GCC/startup_efm32hg.S
-GECKO_C_SRC = $(shell [ -d ../Gecko_SDK ] && find ../Gecko_SDK/platform/emlib/src -name \*.c \! -name em_int.c) \
-							../Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Source/system_efm32hg.c \
-							../Gecko_SDK/hardware/kit/common/drivers/capsense.c
-GECKO_OBJ = $(patsubst %.S,%.o,$(GECKO_A_SRC)) \
-						$(patsubst %.c,%.o,$(GECKO_C_SRC))
+GECKO_C_SRC = $(shell [ -d ../Gecko_SDK ] && find ../Gecko_SDK/platform/emlib/src ../Gecko_SDK/platform/middleware/usb_gecko/src -name \*.c \! -name em_int.c ) \
+                                                  ../Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Source/system_efm32hg.c \
+                                                  ../Gecko_SDK/hardware/kit/common/drivers/capsense.c
+GECKO_OBJ = $(patsubst %.S,%.o,$(GECKO_A_SRC)) $(patsubst %.c,%.o,$(GECKO_C_SRC))
+
+BLINKY_A_SRC = $(shell find . -maxdepth 1 -name \*.S)
+BLINKY_C_SRC = $(shell find . -maxdepth 1 -name \*.c)
+BLINKY_OBJ = $(patsubst %.S,%.o,$(BLINKY_A_SRC)) $(patsubst %.c,%.o,$(BLINKY_C_SRC))
 
 %.o: %.c
 	$(Q_CC)$(CC) -c $(CFLAGS) -c -o $@ $<
@@ -141,12 +145,12 @@ GECKO_OBJ = $(patsubst %.S,%.o,$(GECKO_A_SRC)) \
 #
 # REAL TARGETS // CLEAN
 #
-blinky.dump: blinky.elf
+blinky+usb.dump: blinky+usb.elf
 	$(Q_OBJDUMP)$(OBJDUMP) -Sx $^ > $@
 
-blinky.elf: main.o $(GECKO_OBJ)
-	$(Q_CC)$(CC) -Xlinker -Map=blinky.map $(LFLAGS) -o $@ $^
+blinky+usb.elf: $(BLINKY_OBJ) $(GECKO_OBJ)
+	$(Q_CC)$(CC) -Xlinker -Map=blinky+usb.map $(LFLAGS) -o $@ $^
 
-blinky.bin: blinky.elf
+blinky+usb.bin: blinky+usb.elf
 	$(Q_OBJCOPY)$(OBJCOPY) -O binary $< $@
 
