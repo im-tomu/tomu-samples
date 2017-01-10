@@ -15,6 +15,9 @@ To compile these, you'll need a cross-compiling toolchain to arm-none-eabi.
  - Other Linux : check your package manager, or
  - Anything else (Windows, OSX, Linux) : [https://launchpad.net/gcc-arm-embedded/+download](https://launchpad.net/gcc-arm-embedded/+download)
 
+ If the cross compiling toolchain is in your PATH then the Makefile will
+ auto-detect it; else (or to override it) specify it using the environment
+ variable "CROSS_COMPILE".
  There might be additional dependencies, depending on which specific project
  you're using, and the instructions for compilation are included in each
  project's README.md
