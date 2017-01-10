@@ -51,11 +51,11 @@ GECKO_SDK_REV = v5.0.0
 
 all:
 	make -C efm32hg-blinky
-	make -C efm32hg-blinky+usb
+	make -C efm32hg-blinky-usb
 
 clean:
 	make -C efm32hg-blinky clean
-	make -C efm32hg-blinky+usb clean
+	make -C efm32hg-blinky-usb clean
 	@echo "Cleaning Gecko_SDK files..."
 	@find Gecko_SDK -type f -name \*.bin -delete
 	@find Gecko_SDK -type f -name \*.dump -delete

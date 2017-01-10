@@ -17,4 +17,4 @@ make
 ```
 
 # How to Flash
-Follow the steps in the general README.md, using `blinky+usb.bin`
+Follow the steps in the general README.md, using `blinky-usb.bin`
