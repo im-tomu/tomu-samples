@@ -8,6 +8,5 @@ install:
         - sudo apt-get install -yy gcc-arm-embedded
 
 script:
-        - cd efm32hg-blinky
         - make deps
-        - CROSS_COMPILE=arm-none-eabi- make
+        - make
