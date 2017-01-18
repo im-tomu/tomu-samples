@@ -8,20 +8,22 @@ ease your introduction to the Tomu platform.
 
 ## How to use:
 
-To compile these, you'll need a cross-compiling toolchain to arm-none-eabi.
+1. To compile these, you'll need a cross-compiling toolchain to arm-none-eabi.
 
- - Debian/Ubuntu/... : `sudo apt-get install gcc-arm-none-eabi`
- - Fedora : `sudo yum install arm-none-eabi-gcc-cs`
- - Other Linux : check your package manager, or
- - Anything else (Windows, OSX, Linux) : [https://launchpad.net/gcc-arm-embedded/+download](https://launchpad.net/gcc-arm-embedded/+download)
+  - Debian/Ubuntu/... : `sudo apt-get install gcc-arm-none-eabi`
+  - Fedora : `sudo yum install arm-none-eabi-gcc-cs`
+  - Other Linux : check your package manager, or
+  - Anything else (Windows, OSX, Linux) : [https://launchpad.net/gcc-arm-embedded/+download](https://launchpad.net/gcc-arm-embedded/+download)
 
- If the cross compiling toolchain is in your PATH then the Makefile will
- auto-detect it; else (or to override it) specify it using the environment
- variable "CROSS_COMPILE".
- There might be additional dependencies, depending on which specific project
- you're using, and the instructions for compilation are included in each
- project's README.md
-
+  If the cross compiling toolchain is in your PATH then the Makefile will
+  auto-detect it; else (or to override it) specify it using the environment
+  variable "CROSS_COMPILE".
+  There might be additional dependencies, depending on which specific project
+  you're using, and the instructions for compilation are included in each
+  project's README.md
+2. Ensure you have a copy of [Gecko SDK](https://github.com/SiliconLabs/Gecko_SDK) either inside of linked to the the cloned directory
+3. Run `make deps .` to patch the linker with support for the Tomu
+4. Now you can build the examples
 
 ## Flashing:
 
