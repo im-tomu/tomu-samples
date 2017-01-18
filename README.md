@@ -21,9 +21,8 @@ ease your introduction to the Tomu platform.
   There might be additional dependencies, depending on which specific project
   you're using, and the instructions for compilation are included in each
   project's README.md
-2. Ensure you have a copy of [Gecko SDK](https://github.com/SiliconLabs/Gecko_SDK) either inside of linked to the the cloned directory
-3. Run `make deps .` to patch the linker with support for the Tomu
-4. Now you can build the examples
+2. Run `make deps .` to patch the linker with support for the Tomu and clone the [Gecko SDK](https://github.com/SiliconLabs/Gecko_SDK) locally
+3. Now you can build the examples
 
 ## Flashing:
 
