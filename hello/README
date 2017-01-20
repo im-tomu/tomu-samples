@@ -1,0 +1,18 @@
+This program (released under the Apache licence)
+says hello continually on the Tomu's low-power serial port.
+
+It can also build an image that can be run on qemu.
+
+For QEMU:
+  Get a copy of the bootloader by doing
+      make get_bootloader
+  then build an image:
+      make hello-qemu.img
+
+
+You can run it by doing
+    qemu-system-arm -M tomu -nographic -kernel hello-qemu.img
+
+This assumes you're using Shenki's QEMU port, available from
+https://github.com/shenki/qemu/tree/efm32hg
+
