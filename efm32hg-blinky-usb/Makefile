@@ -90,9 +90,10 @@ clean:
 #
 GECKO_A_SRC = ../Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Source/GCC/startup_efm32hg.S
 GECKO_C_SRC = $(shell [ -d ../Gecko_SDK ] && find ../Gecko_SDK/platform/emlib/src ../Gecko_SDK/platform/middleware/usb_gecko/src -name \*.c \! -name em_int.c ) \
-                                                  ../Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Source/system_efm32hg.c \
-                                                  ../Gecko_SDK/hardware/kit/common/drivers/capsense.c
-GECKO_OBJ = $(patsubst %.S,%.o,$(GECKO_A_SRC)) $(patsubst %.c,%.o,$(GECKO_C_SRC))
+							../Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Source/system_efm32hg.c \
+							../Gecko_SDK/hardware/kit/common/drivers/capsense.c
+GECKO_OBJ = $(patsubst %.S,%.o,$(GECKO_A_SRC)) \
+						$(patsubst %.c,%.o,$(GECKO_C_SRC))
 
 BLINKY_A_SRC = $(shell find . -maxdepth 1 -name \*.S)
 BLINKY_C_SRC = $(shell find . -maxdepth 1 -name \*.c)
