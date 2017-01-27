@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-# Usee make V=1 for a verbose build.
+# Use make V=1 for a verbose build.
 ifndef V
         Q_CC		= @echo '      CC ' $@;
         Q_OBJDUMP	= @echo ' OBJDUMP ' $@;
