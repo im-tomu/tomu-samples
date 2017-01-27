@@ -33,32 +33,8 @@ IFLAGS = -I. \
 				 -I../Gecko_SDK/platform/emlib/inc \
 				 -I../Gecko_SDK/hardware/kit/common/drivers
 
-CFLAGS = $(IFLAGS) \
-				 -DEFM32HG309F64 \
-				 -Wall \
-				 -Wextra \
-				 -mcpu=cortex-m0plus \
-				 -mthumb \
-				 -ffunction-sections \
-				 -fdata-sections \
-				 -fomit-frame-pointer \
-				 -std=c99 \
-				 -MMD \
-				 -MP \
-				 -O0 \
-				 -g
-
-LSCRIPT = ../tomu.ld
-
-LFLAGS = -mcpu=cortex-m0plus \
-				 -mthumb \
-				 -T$(LSCRIPT) \
-				 --specs=nosys.specs \
-				 -Wl,--gc-sections \
-				 -Wl,--start-group \
-				 -lnosys \
-				 -Wl,--end-group
-
+# Define CFLAGS, LSCRIPT and LFLAGS
+include ../compile_flags.mk
 
 ################################################################################
 #
