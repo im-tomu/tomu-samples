@@ -20,20 +20,8 @@ ifndef V
         Q_OBJCOPY	= @echo ' OBJCOPY ' $@;
 endif
 
-################################################################################
-#
-# PATHS
-#
-# Put the path to the arm-none-eabi toolchain that you downloaded here, up to
-# /bin/, and end with arm-none-eabi-
-CROSS_COMPILE ?= arm-none-eabi-
-
-# You can download the ARM toolchain from:
-# https://launchpad.net/gcc-arm-embedded/+download
-
-CC	= $(CROSS_COMPILE)gcc
-OBJCOPY	= $(CROSS_COMPILE)objcopy
-OBJDUMP	= $(CROSS_COMPILE)objdump
+# Define CROSS_COMPILE, CC, OBJCOPY and OBJDUMP
+include ../paths.mk
 
 ################################################################################
 #
