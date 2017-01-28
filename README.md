@@ -12,6 +12,7 @@ ease your introduction to the Tomu platform.
 
   - Debian/Ubuntu/... : `sudo apt-get install gcc-arm-none-eabi`
   - Fedora : `sudo yum install arm-none-eabi-gcc-cs`
+  - Arch : `sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib`
   - Other Linux : check your package manager, or
   - Anything else (Windows, OSX, Linux) : [https://launchpad.net/gcc-arm-embedded/+download](https://launchpad.net/gcc-arm-embedded/+download)
 
