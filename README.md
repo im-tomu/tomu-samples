@@ -14,7 +14,7 @@ ease your introduction to the Tomu platform.
   - Fedora : `sudo yum install arm-none-eabi-gcc-cs`
   - Arch : `sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib`
   - Other Linux : check your package manager, or
-  - Anything else (Windows, OSX, Linux) : [https://launchpad.net/gcc-arm-embedded/+download](https://launchpad.net/gcc-arm-embedded/+download)
+  - Anything else (Windows, OSX, Linux) : [https://developer.arm.com/open-source/gnu-toolchain/gnu-rm ](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm )
 
   If the cross compiling toolchain is in your PATH then the Makefile will
   auto-detect it; else (or to override it) specify it using the environment
