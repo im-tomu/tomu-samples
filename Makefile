@@ -12,30 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-# Usee make V=1 for a verbose build.
-ifndef V
-        Q_CC		= @echo '      CC ' $@;
-        Q_OBJDUMP	= @echo ' OBJDUMP ' $@;
-        Q_OBJCOPY	= @echo ' OBJCOPY ' $@;
-endif
-
-################################################################################
-#
-# PATHS
-#
-# Put the path to the arm-none-eabi toolchain that you downloaded here, up to
-# /bin/, and end with arm-none-eabi-
-CROSS_COMPILE ?= $(patsubst %gcc,%,$(shell which arm-none-eabi-gcc))
-
-
-# You can download the ARM toolchain from:
-# https://launchpad.net/gcc-arm-embedded/+download
-
-CC	= $(CROSS_COMPILE)gcc
-OBJCOPY	= $(CROSS_COMPILE)objcopy
-OBJDUMP	= $(CROSS_COMPILE)objdump
-
 ################################################################################
 #
 # Gecko
