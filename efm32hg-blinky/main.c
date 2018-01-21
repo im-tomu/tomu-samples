@@ -21,6 +21,7 @@
 #include "em_device.h"
 #include "em_emu.h"
 #include "em_gpio.h"
+#include "em_wdog.h"
 
 // The uptime of this application in milliseconds, maintained by the SysTick
 // timer.
@@ -31,6 +32,7 @@ volatile uint32_t uptime_millis;
 // main() further below).
 void SysTick_Handler() {
   uptime_millis++;
+  WDOG->CMD = WDOG_CMD_CLEAR;
 }
 
 void SpinDelay(uint32_t millis) {
@@ -45,6 +47,8 @@ int main() {
   // Runs the Silicon Labs chip initialisation stuff, that also deals with
   // errata (implements workarounds, etc).
   CHIP_Init();
+
+  WDOG->CTRL = WDOG_CTRL_CLKSEL_ULFRCO | WDOG_CTRL_EN | (1 << _WDOG_CTRL_PERSEL_SHIFT);
 
   // Switch on the clock for GPIO. Even though there's no immediately obvious
   // timing stuff going on beyond the SysTick below, it still needs to be
