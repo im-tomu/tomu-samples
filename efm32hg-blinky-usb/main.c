@@ -9,6 +9,7 @@
 #include "em_emu.h"
 #include "em_gpio.h"
 #include "em_usb.h"
+#include "em_wdog.h"
 
 #include "callbacks.h"
 #include "descriptors.h"
@@ -37,6 +38,9 @@ int main() {
   // Runs the Silicon Labs chip initialisation stuff, that also deals with
   // errata (implements workarounds, etc).
   CHIP_Init();
+
+  // Disable the watchdog that the bootloader started.
+  WDOG->CTRL = 0;
 
   // Switch on the clock for GPIO. Even though there's no immediately obvious
   // timing stuff going on beyond the SysTick below, it still needs to be
