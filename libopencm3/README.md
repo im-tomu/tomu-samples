@@ -21,5 +21,8 @@ for now you can find a copy in the
  * [libopencm3 with SiLabs EFM32 Happy Gecko + Tomu support.](https://github.com/im-tomu/libopencm3)
  * [libopencm3-examples with SiLabs EFM32 Happy Gecko + Tomu support.](https://github.com/im-tomu/libopencm3-examples)
 
-FIXME: Typing `make` should eventually download and compile these examples for
-you.
+# Building `libopencm3-examples`
+
+Typing `make` will download and compile these examples for you.
+
+The compiled binaries (and README.md about flashing) can then be found at `libopencm3-examples/examples/efm32/efm32hg/tomu-efm32hg309`
