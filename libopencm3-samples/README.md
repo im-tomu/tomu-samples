@@ -19,16 +19,13 @@ Typing `make` will compile these examples for you.
 
 # Bootloader assumptions
 
-These examples are built for the vanilla (non-DFU, AN0042) bootloader present
-on board revision 0.3.
+These examples are compatible with the non-DFU serial AN0042 bootloader.  They will run in legacy mode with a DFU-enabled bootloader, such as the one shipped on v0.4 boards.  They run from flash offset 0x4000, and do not auto-boot.  To get back into the bootloader, reset the board (e.g. by unplugging it and plugging it back in).
 
-For different bootloaders, modify the linker script and SCB\_VTOR assignment
-as required.
+If you have a DFU-enabled bootloader, upload programs using `dfu-util`.  For example, to upload miniblink, run:
 
-Use:
-    arm-none-eabi-objcopy -O binary <infile>.elf <outfile>.bin
+````dfu-util -d 1209:70b1 -D ./usb_hid/usb_hid.bin````
 
-To create a raw binary that is transferable to the Tomu board using XMODEM.
+If you're using the serial bootloader, upload the binary using XMODEM.
 
 # License
 
