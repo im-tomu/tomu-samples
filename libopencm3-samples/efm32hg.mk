@@ -25,5 +25,6 @@ DEFS		+= -DEFM32HG
 
 FP_FLAGS	?= -mfloat-abi=soft
 ARCH_FLAGS	= -mthumb -mcpu=cortex-m0plus $(FP_FLAGS)
+DEFS            += -I../include
 
 include ../libopencm3_rules.mk
