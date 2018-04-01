@@ -37,6 +37,15 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include <toboot.h>
+
+/* Declare support for Toboot V2 */
+/* To enable this program to run when you first plug in Tomu, pass
+ * TOBOOT_CONFIG_FLAG_AUTORUN to this macro.  Otherwise, leave the
+ * configuration value at 0 to use the defaults.
+ */
+TOBOOT_CONFIGURATION(0);
+
 /* Systick interrupt frequency, Hz */
 #define SYSTICK_FREQUENCY 1000
 
