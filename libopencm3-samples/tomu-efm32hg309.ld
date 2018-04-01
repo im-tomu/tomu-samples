@@ -26,5 +26,11 @@ MEMORY
     ram (rwx)  : ORIGIN = 0x20000000, LENGTH = 0x2000
 }
 
+SECTIONS {
+	.text : {
+		KEEP(SORT(*)(.vectors))
+	} >rom
+}
+
 /* Include the common ld script. */
 INCLUDE libopencm3_efm32hg.ld
