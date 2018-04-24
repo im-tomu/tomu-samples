@@ -1,41 +1,51 @@
-# tomu-samples
-
-## What are these:
+# Tomu Samples
 
 These projects are simple programs for the [Tomu](http://tomu.im). They do
 various things, and are intended to offer code examples and simple testing to
 ease your introduction to the Tomu platform.
 
-## How to use:
+These are based on the libopencm3 library.  To build projects using the `Gecko_SDK` provided by Silicon Labs, see the [gecko-sdk](./gecko-sdk) directory.
+
+## libopencm3
+
+[libopencm3](http://libopencm3.org/) is an Open-Source lowlevel hardware
+library for ARM Cortex-M3 microcontrollers (but also M0, M4 are supported and
+more to come).
+
+Upstream libopencm3 now supports the EFM32HG. The examples located here
+were modified to support the EFM32HG and tested on the Tomu with a Linux host:
+
+* A USB-Serial CDCACM device example (`usb_cdcacm`)
+* A USB HID mouse emulation example (`usb_hid`)
+* A USB Mass Storage Device example (`usb_msc`)
+* A USB MIDI example (`usb_midi`)
+* A raw endpoint example with a sample python program that controls an LED
+
+## Building
 
 1. To compile these, you'll need a cross-compiling toolchain to arm-none-eabi.
+* Debian/Ubuntu/... : `sudo apt-get install gcc-arm-none-eabi`
+* Fedora : `sudo yum install arm-none-eabi-gcc-cs arm-none-eabi-newlib`
+* Arch : `sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib`
+* Other Linux : check your package manager, or
+* Anything else (Windows, OSX, Linux): [https://developer.arm.com/open-source/gnu-toolchain/gnu-rm](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm)
+1. Run `make` to build all examples
 
-  - Debian/Ubuntu/... : `sudo apt-get install gcc-arm-none-eabi`
-  - Fedora : `sudo yum install arm-none-eabi-gcc-cs arm-none-eabi-newlib`
-  - Arch : `sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib`
-  - Other Linux : check your package manager, or
-  - Anything else (Windows, OSX, Linux) : [https://developer.arm.com/open-source/gnu-toolchain/gnu-rm ](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm )
+## Bootloader assumptions
 
-  If the cross compiling toolchain is in your PATH then the Makefile will
-  auto-detect it; else (or to override it) specify it using the environment
-  variable "CROSS_COMPILE".
-  There might be additional dependencies, depending on which specific project
-  you're using, and the instructions for compilation are included in each
-  project's README.md
+These examples are compatible with the non-DFU serial AN0042 bootloader.  They will run in legacy mode with a DFU-enabled bootloader, such as the one shipped on v0.4 boards.  They run from flash offset 0x4000, and do not auto-boot.  To get back into the bootloader, reset the board (e.g. by unplugging it and plugging it back in).
 
-2. Run `make deps .` to patch the linker with support for the Tomu and clone the [Gecko SDK](https://github.com/SiliconLabs/Gecko_SDK) locally
+If you have a DFU-enabled bootloader, upload programs using `dfu-util`.  For example, to upload miniblink, run:
 
-3. Now you can build the examples
+````
+dfu-util -d 1209:70b1 -D ./usb_hid/usb_hid.bin
+````
 
-## Flashing:
+If you're using the serial bootloader, upload the binary using XMODEM.
 
-Once you've compiled the code, you can flash the Tomu using `minicom` on linux
-and OSX, or some other serial I/O utility on Windows. To do that, set it up with
-`115200 8n1`, then use `i` to show the bootloader version.
+## License
 
-To upload the binary, press `u`, wait till the bootloader replies with `Ready`,
-then press `^A-S`, choose XMODEM, choose the `.bin` file produced by the
-compilation, and wait until it's uploaded.
+The libopencm3 code & examples are released under the terms of the GNU Lesser
+General Public License (LGPL), version 3 or later.
 
-Once that's done, press `b` to boot into the firmware. The bootloader will hang
-for 5-7 seconds, then the Tomu will boot.
+See COPYING.GPL3 and COPYING.LGPL3 for details.
