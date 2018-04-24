@@ -8,5 +8,4 @@ install:
         - sudo apt-get install -yy gcc-arm-embedded
 
 script:
-        - make deps
         - make
