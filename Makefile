@@ -1,5 +1,11 @@
-all: libopencm3-samples
+all: libopencm3-samples gnuk
 	@true
+
+gnuk:
+	git submodule init
+	git submodule update --recursive
+	cd gnuk/src && ./configure --target=TOMU --vidpid=234b:0000
+	make -C gnuk/src
 
 libopencm3-samples:
 	git submodule init
@@ -21,4 +27,4 @@ clean:
 	make -C usb_midi clean
 	make -C usb_simple clean
 
-.PHONY: libopencm3-samples
+.PHONY: libopencm3-samples gnuk
