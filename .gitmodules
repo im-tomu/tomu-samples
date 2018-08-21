@@ -1,3 +1,7 @@
 [submodule "libopencm3"]
 	path = libopencm3
 	url = https://github.com/libopencm3/libopencm3
+[submodule "gnuk"]
+	path = gnuk
+	url = https://github.com/aze00/gnuk.git
+	branch = efm32
