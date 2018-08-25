@@ -51,6 +51,10 @@
 #define PRODUCT_ID                0x70b1    /* Assigned to Tomu project */
 #define DEVICE_VER                0x0101    /* Program version */
 
+// Make this program compatible with Toboot-V2.0
+#include <toboot.h>
+TOBOOT_CONFIGURATION(0);
+
 usbd_device *g_usbd_dev = 0;
 
 const struct usb_device_descriptor dev = {
@@ -102,8 +106,8 @@ const struct usb_config_descriptor config = {
 
 const char *usb_strings[] = {
 	"Tomu",
-	"Simple Device",
-	"1001",
+  "USB Simple LED",
+  "e018bf6d-0e3b-4f20-bf9f-c25ee5e0f769",
 };
 
 /* Buffer to be used for control requests. */
@@ -120,12 +124,19 @@ static enum usbd_request_return_codes simple_control_callback(usbd_device *usbd_
 	if (req->bmRequestType != 0x40)
 		return 0; /* Only accept vendor request. */
 
-	if (req->wValue & 1)
-        gpio_set(LED_GREEN_PORT, LED_GREEN_PIN);
-	else
-        gpio_clear(LED_GREEN_PORT, LED_GREEN_PIN);
+  if (req->wValue & 1) {
+      gpio_clear(LED_GREEN_PORT, LED_GREEN_PIN);
+  } else {
+      gpio_set(LED_GREEN_PORT, LED_GREEN_PIN);
+  }
 
-	return 1;
+  if (req->wValue & 2) {
+      gpio_clear(LED_RED_PORT, LED_RED_PIN);
+  } else {
+      gpio_set(LED_RED_PORT, LED_RED_PIN);
+  }
+
+	return USBD_REQ_HANDLED;
 }
 
 static void usb_set_config_cb(usbd_device *usbd_dev, uint16_t wValue)
@@ -166,15 +177,15 @@ int main(void)
     gpio_mode_setup(LED_GREEN_PORT, GPIO_MODE_WIRED_AND, LED_GREEN_PIN);
 
     /* Configure the USB core & stack */
-	g_usbd_dev = usbd_init(&efm32hg_usb_driver, &dev, &config, usb_strings, 3, usbd_control_buffer, sizeof(usbd_control_buffer));
-	usbd_register_set_config_callback(g_usbd_dev, usb_set_config_cb);
+    g_usbd_dev = usbd_init(&efm32hg_usb_driver, &dev, &config, usb_strings, 3, usbd_control_buffer, sizeof(usbd_control_buffer));
+    usbd_register_set_config_callback(g_usbd_dev, usb_set_config_cb);
 
     /* Enable USB IRQs */
-	nvic_enable_irq(NVIC_USB_IRQ);
+    nvic_enable_irq(NVIC_USB_IRQ);
 
     while(1) {
-        gpio_toggle(LED_RED_PORT, LED_RED_PIN);
-        for(i = 0; i != 500000; ++i)
-			__asm__("nop");
+        for(i = 0; i != 500000; ++i) {
+            __asm__("nop");
+        }
     }
 }
