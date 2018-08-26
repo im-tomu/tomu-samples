@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import usb.core
 
 MODE = ['off', 'green', 'red', 'green+red']
