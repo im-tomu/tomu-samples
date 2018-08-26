@@ -18,3 +18,14 @@ One may send a USB Control Transfers of a Vendor request type (0x40) in order to
  * 1: Green
  * 2: Red
  * 3: Green and Red
+
+## Flashing to a device with autorun
+
+To build and flash `usb_simple` with autorun enabled, so you don't need to flash on power-on:
+
+```
+make usb_simple.bin CFLAGS=-DTOBOOT_FORCE_AUTORUN
+dfu-util -d 1209:70b1 -D usb_simple.bin
+```
+
+If you want to be able to reflash this, you need to [short the two outer pads on power-on](https://github.com/im-tomu/tomu-bootloader#entering-toboot).

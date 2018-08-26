@@ -53,7 +53,14 @@
 
 // Make this program compatible with Toboot-V2.0
 #include <toboot.h>
+// If -DTOBOOT_FORCE_AUTORUN, then make this an autorun-enabled binary. This
+// means we don't need to reflash the program at startup, but makes it more
+// difficult to develop iteratively.
+#ifdef TOBOOT_FORCE_AUTORUN
+TOBOOT_CONFIGURATION(TOBOOT_CONFIG_FLAG_AUTORUN);
+#else
 TOBOOT_CONFIGURATION(0);
+#endif
 
 usbd_device *g_usbd_dev = 0;
 
