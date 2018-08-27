@@ -26,10 +26,29 @@ were modified to support the EFM32HG and tested on the Tomu with a Linux host:
 1. To compile these, you'll need a cross-compiling toolchain to arm-none-eabi.
 * Debian/Ubuntu/... : `sudo apt-get install gcc-arm-none-eabi`
 * Fedora : `sudo yum install arm-none-eabi-gcc-cs arm-none-eabi-newlib`
+* OpenSUSE: sudo zypper ar obs://home:mnhauke home_mnhauke && sudo zypper in cross-arm-none-gcc8 cross-arm-none-newlib-devel dfu-util
 * Arch : `sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib`
 * Other Linux : check your package manager, or
 * Anything else (Windows, OSX, Linux): [https://developer.arm.com/open-source/gnu-toolchain/gnu-rm](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm)
-1. Run `make` to build all examples
+
+2. Fetch the required git submodules:
+
+```
+git submodule init
+git submodule update
+```
+
+3. Run `make` to build all examples
+
+## Debugging build issues
+
+It can be helpful to run the build with:
+
+```
+CFLAGS='-v' make
+```
+
+This will show you include paths, commands and more, and may help you to diagnose the issue.
 
 ## Bootloader assumptions
 
@@ -49,3 +68,4 @@ The libopencm3 code & examples are released under the terms of the GNU Lesser
 General Public License (LGPL), version 3 or later.
 
 See COPYING.GPL3 and COPYING.LGPL3 for details.
+
