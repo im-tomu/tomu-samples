@@ -34,8 +34,7 @@ were modified to support the EFM32HG and tested on the Tomu with a Linux host:
 2. Fetch the required git submodules:
 
 ```
-git submodule init
-git submodule update
+git submodule update --init --recursive
 ```
 
 3. Run `make` to build all examples
