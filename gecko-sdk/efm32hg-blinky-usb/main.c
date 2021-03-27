@@ -60,6 +60,10 @@ int main() {
   GPIO_PinModeSet(gpioPortA, 0, gpioModeWiredAnd, 0);
   GPIO_PinModeSet(gpioPortB, 7, gpioModeWiredAnd, 0);
 
+  // Disable GPIO for pin PC1 (CAP1A, red LED button).
+  // This pin was enabled as Output by Toboot bootloader, it interferes with the analog comparator.
+  GPIO_PinModeSet(gpioPortC, 1, gpioModeDisabled, 0);
+
   // Enable the capacitive touch sensor. Remember, this consumes TIMER0 and
   // TIMER1, so those are off-limits to us.
   CAPSENSE_Init();
