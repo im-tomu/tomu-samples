@@ -45,7 +45,7 @@
 *.d
 
 # External libraries
-Gecko_SDK
+gecko_sdk
 gcc-arm-none-eabi-5_4-2016q2
 
 # Patched linker file

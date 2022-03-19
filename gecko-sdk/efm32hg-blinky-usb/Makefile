@@ -28,11 +28,11 @@ include ../paths.mk
 # ARGUMENTS TO COMPILERS/LINKERS
 #
 IFLAGS = -I. \
-				 -I../Gecko_SDK/platform/CMSIS/Include \
-				 -I../Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Include \
-				 -I../Gecko_SDK/platform/emlib/inc \
-				 -I../Gecko_SDK/platform/middleware/usb_gecko/inc \
-				 -I../Gecko_SDK/hardware/kit/common/drivers
+				 -I../gecko_sdk/platform/CMSIS/Include \
+				 -I../gecko_sdk/platform/Device/SiliconLabs/EFM32HG/Include \
+				 -I../gecko_sdk/platform/emlib/inc \
+				 -I../gecko_sdk/platform/middleware/usb_gecko/inc \
+				 -I../gecko_sdk/hardware/kit/common/drivers
 
 # Define CFLAGS, LSCRIPT and LFLAGS
 include ../compile_flags.mk
@@ -88,10 +88,10 @@ clean:
 #
 # REAL TARGETS // COMMON
 #
-GECKO_A_SRC = ../Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Source/GCC/startup_efm32hg.S
-GECKO_C_SRC = $(shell [ -d ../Gecko_SDK ] && find ../Gecko_SDK/platform/emlib/src ../Gecko_SDK/platform/middleware/usb_gecko/src -name \*.c \! -name em_int.c ) \
-							../Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Source/system_efm32hg.c \
-							../Gecko_SDK/hardware/kit/common/drivers/capsense.c
+GECKO_A_SRC = ../gecko_sdk/platform/Device/SiliconLabs/EFM32HG/Source/GCC/startup_efm32hg.S
+GECKO_C_SRC = $(shell [ -d ../gecko_sdk ] && find ../gecko_sdk/platform/emlib/src ../gecko_sdk/platform/middleware/usb_gecko/src -name \*.c \! -name em_int.c ) \
+							../gecko_sdk/platform/Device/SiliconLabs/EFM32HG/Source/system_efm32hg.c \
+							../gecko_sdk/hardware/kit/common/drivers/capsense.c
 GECKO_OBJ = $(patsubst %.S,%.o,$(GECKO_A_SRC)) \
 						$(patsubst %.c,%.o,$(GECKO_C_SRC))
 

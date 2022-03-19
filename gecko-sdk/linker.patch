@@ -1,6 +1,6 @@
---- Gecko_SDK/Device/SiliconLabs/EFM32HG/Source/GCC/efm32hg.ld	2017-01-02 16:25:06.000000000 +0100
-+++ tomu.ld	2017-01-02 16:30:02.000000000 +0100
-@@ -11,8 +11,8 @@
+--- gecko_sdk/platform/Device/SiliconLabs/EFM32HG/Source/GCC/efm32hg.ld
++++ tomu.ld
+@@ -29,8 +29,8 @@
  
  MEMORY
  {

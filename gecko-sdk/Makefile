@@ -17,7 +17,7 @@
 # Gecko
 #
 LSCRIPT = tomu.ld
-GECKO_SDK_REV = v5.0.0
+GECKO_SDK_REV = v4.0.2
 
 ################################################################################
 #
@@ -32,26 +32,26 @@ all:
 clean:
 	make -C efm32hg-blinky clean
 	make -C efm32hg-blinky-usb clean
-	@echo "Cleaning Gecko_SDK files..."
-	@find Gecko_SDK -type f -name \*.bin -delete
-	@find Gecko_SDK -type f -name \*.dump -delete
-	@find Gecko_SDK -type f -name \*.d -delete
-	@find Gecko_SDK -type f -name \*.elf -delete
-	@find Gecko_SDK -type f -name \*.map -delete
-	@find Gecko_SDK -type f -name \*.o -delete
+	@echo "Cleaning gecko_sdk files..."
+	@find gecko_sdk -type f -name \*.bin -delete
+	@find gecko_sdk -type f -name \*.dump -delete
+	@find gecko_sdk -type f -name \*.d -delete
+	@find gecko_sdk -type f -name \*.elf -delete
+	@find gecko_sdk -type f -name \*.map -delete
+	@find gecko_sdk -type f -name \*.o -delete
 
 
 dist-clean:
 	make clean || true
-	rm -rf Gecko_SDK
+	rm -rf gecko_sdk
 	rm tomu.ld
 
 deps:
-	@if [ ! -d Gecko_SDK ]; then \
-		git clone --depth 1 https://github.com/SiliconLabs/Gecko_SDK --branch ${GECKO_SDK_REV}; \
+	@if [ ! -d gecko_sdk ]; then \
+		git clone --depth 1 https://github.com/SiliconLabs/gecko_sdk --branch ${GECKO_SDK_REV}; \
 	fi
 	@if [ ! -f "${LSCRIPT}" ]; then \
 		echo "Patching linker file to ${LSCRIPT}"; \
-		patch -o ${LSCRIPT} Gecko_SDK/platform/Device/SiliconLabs/EFM32HG/Source/GCC/efm32hg.ld linker.patch; \
+		patch -o ${LSCRIPT} gecko_sdk/platform/Device/SiliconLabs/EFM32HG/Source/GCC/efm32hg.ld linker.patch; \
 	fi
 
