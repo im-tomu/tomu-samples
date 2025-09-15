@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-import usb.core
+try:
+    import libusb_package as usb
+except ImportError:
+    from usb import core as usb
 
 MODE = ['off', 'green', 'red', 'green+red']
 
 def main():
-    dev = usb.core.find(idVendor=0x1209, idProduct=0x70b1)
+    dev = usb.find(idVendor=0x1209, idProduct=0x70b1)
 
     if dev is None:
         raise ValueError('Device not found')
